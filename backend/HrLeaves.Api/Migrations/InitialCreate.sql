@@ -1,0 +1,12 @@
+CREATE TABLE Employees (Id int IDENTITY(1,1) NOT NULL PRIMARY KEY, FullName nvarchar(max) NOT NULL, Email nvarchar(450) NOT NULL, HireDate date NOT NULL);
+CREATE UNIQUE INDEX IX_Employees_Email ON Employees(Email);
+CREATE TABLE LeaveTypes (Id int IDENTITY(1,1) NOT NULL PRIMARY KEY, Name nvarchar(450) NOT NULL, DefaultDays decimal(10,2) NOT NULL, IsAccrued bit NOT NULL, AccrualRatePerMonth decimal(10,2) NOT NULL);
+CREATE UNIQUE INDEX IX_LeaveTypes_Name ON LeaveTypes(Name);
+CREATE TABLE LeaveBalances (Id int IDENTITY(1,1) NOT NULL PRIMARY KEY, EmployeeId int NOT NULL, LeaveTypeId int NOT NULL, TotalDays decimal(10,2) NOT NULL, UsedDays decimal(10,2) NOT NULL, CONSTRAINT FK_LeaveBalances_Employees FOREIGN KEY(EmployeeId) REFERENCES Employees(Id) ON DELETE CASCADE, CONSTRAINT FK_LeaveBalances_LeaveTypes FOREIGN KEY(LeaveTypeId) REFERENCES LeaveTypes(Id) ON DELETE CASCADE);
+CREATE UNIQUE INDEX IX_LeaveBalances_EmployeeId_LeaveTypeId ON LeaveBalances(EmployeeId, LeaveTypeId);
+CREATE TABLE LeaveRequests (Id int IDENTITY(1,1) NOT NULL PRIMARY KEY, EmployeeId int NOT NULL, LeaveTypeId int NOT NULL, StartDate date NOT NULL, EndDate date NOT NULL, DaysRequested decimal(10,2) NOT NULL, Reason nvarchar(max) NOT NULL, Status int NOT NULL, RejectionComment nvarchar(max) NULL, CreatedAt datetime2 NOT NULL, CONSTRAINT FK_LeaveRequests_Employees FOREIGN KEY(EmployeeId) REFERENCES Employees(Id) ON DELETE CASCADE, CONSTRAINT FK_LeaveRequests_LeaveTypes FOREIGN KEY(LeaveTypeId) REFERENCES LeaveTypes(Id) ON DELETE CASCADE);
+CREATE INDEX IX_LeaveRequests_EmployeeId ON LeaveRequests(EmployeeId);
+CREATE INDEX IX_LeaveRequests_LeaveTypeId ON LeaveRequests(LeaveTypeId);
+CREATE TABLE LeaveSettlements (Id int IDENTITY(1,1) NOT NULL PRIMARY KEY, EmployeeId int NOT NULL, LeaveTypeId int NOT NULL, AdjustmentDays decimal(10,2) NOT NULL, Reason nvarchar(max) NOT NULL, CreatedAt datetime2 NOT NULL, CONSTRAINT FK_LeaveSettlements_Employees FOREIGN KEY(EmployeeId) REFERENCES Employees(Id) ON DELETE CASCADE, CONSTRAINT FK_LeaveSettlements_LeaveTypes FOREIGN KEY(LeaveTypeId) REFERENCES LeaveTypes(Id) ON DELETE CASCADE);
+CREATE INDEX IX_LeaveSettlements_EmployeeId ON LeaveSettlements(EmployeeId);
+CREATE INDEX IX_LeaveSettlements_LeaveTypeId ON LeaveSettlements(LeaveTypeId);

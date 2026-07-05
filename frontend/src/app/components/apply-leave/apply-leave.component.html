@@ -1,0 +1,4 @@
+<div class="page"><div class="card"><h2>Apply for Leave</h2><p *ngIf="message">{{message}}</p><p class="low" *ngIf="error">{{error}}</p>
+<label>Leave Type</label><select [(ngModel)]="form.leaveTypeId" (change)="saveDraft()"><option value="">Select Type</option><option *ngFor="let t of types" [value]="t.id">{{t.name}}</option></select>
+<p class="low" *ngIf="selectedBalance() && selectedBalance()!.remainingDays < 3">Warning: your balance is low: {{selectedBalance()!.remainingDays}} days</p>
+<label>Start Date</label><input type="date" [(ngModel)]="form.startDate" (input)="saveDraft()"><label>End Date</label><input type="date" [(ngModel)]="form.endDate" (input)="saveDraft()"><label>Reason</label><textarea rows="4" [(ngModel)]="form.reason" (input)="saveDraft()"></textarea><br><br><button [disabled]="!form.leaveTypeId || !form.startDate || !form.endDate" (click)="submit()">Submit</button></div></div>

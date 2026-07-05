@@ -1,0 +1,13 @@
+<div class="page">
+  <div class="grid">
+    <div class="card"><h2>Total Leave Balance</h2><h1>{{totalRemaining()}} days</h1><p class="muted">Across all leave types</p></div>
+    <div class="card" *ngFor="let b of balances"><b>{{b.leaveTypeName}}</b><p>{{b.remainingDays}} / {{b.totalDays}} remaining</p><progress [value]="b.remainingDays" [max]="b.totalDays"></progress></div>
+  </div>
+  <div class="card toolbar">
+    <select [(ngModel)]="filters.status" (change)="reload()"><option value="">All Statuses</option><option>Pending</option><option>Approved</option><option>Rejected</option><option>Cancelled</option></select>
+    <select [(ngModel)]="filters.leaveTypeId" (change)="reload()"><option value="">All Types</option><option *ngFor="let t of types" [value]="t.id">{{t.name}}</option></select>
+    <input type="date" [(ngModel)]="filters.fromDate" (input)="reload()"><input type="date" [(ngModel)]="filters.toDate" (input)="reload()">
+    <button (click)="export()">Export CSV</button>
+  </div>
+  <div class="card"><h2>Leave Requests</h2><table><thead><tr><th (click)="sort('id')">ID</th><th (click)="sort('leaveTypeName')">Type</th><th (click)="sort('startDate')">Dates</th><th (click)="sort('daysRequested')">Days</th><th (click)="sort('status')">Status</th><th>Reason</th></tr></thead><tbody><tr *ngFor="let r of requests"><td>{{r.id}}</td><td>{{r.leaveTypeName}}</td><td>{{r.startDate}} to {{r.endDate}}</td><td>{{r.daysRequested}}</td><td><span class="status">{{r.status}}</span></td><td>{{r.reason}}</td></tr></tbody></table></div>
+</div>
