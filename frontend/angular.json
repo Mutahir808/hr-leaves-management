@@ -3,8 +3,10 @@
   "version": 1,
   "projects": {
     "hr-leaves-ui": {
+      "root": "",
       "projectType": "application",
       "sourceRoot": "src",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -12,6 +14,11 @@
             "outputPath": "dist/hr-leaves-ui",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [],
             "styles": [
               "src/styles.css"
             ]
@@ -25,5 +32,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "3bc3b9af-9086-42b3-a867-04717b596fad"
   }
 }

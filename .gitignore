@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build outputs
+frontend/dist/
+frontend/.angular/
+backend/bin/
+backend/obj/
+
+# IDE/editor files
+.vs/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

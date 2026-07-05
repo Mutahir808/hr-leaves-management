@@ -107,7 +107,7 @@ Content-Type: application/json
 - Leave balance cards/progress bars
 - Form draft persistence using localStorage
 - Swagger documentation
-- Code-first EF Core migrations
+- Code-first EF Core migrations for SQL Server
 
 ## Seed Data
 
